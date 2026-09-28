@@ -5,7 +5,6 @@ A Flask-based web application for marine intelligence and decision support.
 ## Project Structure
 
 ```
-d:\XboxGames\
 ├── ui.py                 # Flask backend application
 ├── templates/
 │   └── index.html       # Main HTML interface
@@ -24,7 +23,6 @@ pip install flask
 
 ### 2. Run the Application
 ```bash
-cd d:\XboxGames
 python ui.py
 ```
 
