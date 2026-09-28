@@ -21,7 +21,7 @@ A huge thank you to the amazing people who helped bring this project to life:
 * **[Harshul Mehta](https://github.com/Qubit-007)** -  AI Architect & Core Developer
   * Designed and built the autonomous AI agentic workflows.
   * Developed the core backend logic, LLM prompt engineering, and tool execution.
-* **[Hououin Kyouma](https://github.com "johnsmith profile")** - Full-Stack Engineer
+* **[Izzo-dev-cooked](https://github.com/Izzo-dev-cooked)** - Full-Stack Engineer
   * Built the Flask web framework, server routing, and API endpoints.
   * Designed and developed the frontend user interface. 
 * **[Krish](https://github.com/krish1086)** - Researcher
