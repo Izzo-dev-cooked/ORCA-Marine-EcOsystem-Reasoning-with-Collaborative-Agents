@@ -1,0 +1,15 @@
+# Core web app (ui.py)
+flask>=3.0
+requests>=2.31
+
+# AI Mission pipeline (mission_agent.py) - Planner/Weather/Geospatial/Judge agents.
+# Requires a GROQ_API_KEY environment variable (https://console.groq.com/keys).
+crewai>=0.86
+geopy>=2.4
+
+# Copernicus Marine (Geospatial/Fishery agent) - requires credentials from
+# https://data.marine.copernicus.eu, set via `copernicusmarine login` or
+# COPERNICUSMARINE_SERVICE_USERNAME/COPERNICUSMARINE_SERVICE_PASSWORD env vars.
+xarray>=2024.3
+copernicusmarine>=1.3
+netCDF4>=1.6
