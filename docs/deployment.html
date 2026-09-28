@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ORCA deployment status and release information.">
+    <title>ORCA | Deployment</title>
+    <link rel="stylesheet" href="deployment.css">
+</head>
+<body>
+    <main class="shell">
+        <header class="hero">
+            <a class="back" href="https://github.com/Izzo-dev-cooked/ORCA-Marine-EcOsystem-Reasoning-with-Collaborative-Agents">ORCA repository</a>
+            <div class="hero-row">
+                <div>
+                    <p class="eyebrow">GitHub Pages deployment</p>
+                    <h1>ORCA <span>deployment</span></h1>
+                    <p class="lede">A public release console for Marine Ecosystem Reasoning with Collaborative Agents.</p>
+                </div>
+                <div class="ready"><span></span> Published</div>
+            </div>
+        </header>
+
+        <section class="overview" aria-label="Release overview">
+            <article class="card release-card">
+                <p class="label">Current release</p>
+                <p class="version">v1.0.0</p>
+                <p class="muted">Release artifact and deployment configuration are available from the repository.</p>
+                <a class="button" href="https://github.com/Izzo-dev-cooked/ORCA-Marine-EcOsystem-Reasoning-with-Collaborative-Agents/releases/tag/v1.0.0">View GitHub release</a>
+            </article>
+            <article class="card">
+                <p class="label">Delivery status</p>
+                <ul class="checks">
+                    <li><span>GitHub Pages</span><strong>Published</strong></li>
+                    <li><span>Source branch</span><strong>main</strong></li>
+                    <li><span>Backend route</span><strong>/deployment</strong></li>
+                    <li><span>Health endpoint</span><strong>/healthz</strong></li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="card paths">
+            <p class="label">Choose a runtime</p>
+            <div class="path">
+                <div class="icon">R</div>
+                <div><h2>Render</h2><p>Deploy the Flask backend using <code>render.yaml</code> and set <code>GROQ_API_KEY</code> for AI missions.</p></div>
+                <span>Managed app</span>
+            </div>
+            <div class="path">
+                <div class="icon">D</div>
+                <div><h2>Docker</h2><p>Build the production image from <code>Dockerfile</code>; Gunicorn binds to the platform <code>PORT</code>.</p></div>
+                <span>Portable</span>
+            </div>
+        </section>
+
+        <footer>
+            <span>Static mirror: GitHub Pages</span>
+            <a href="https://github.com/Izzo-dev-cooked/ORCA-Marine-EcOsystem-Reasoning-with-Collaborative-Agents/releases">All releases</a>
+        </footer>
+    </main>
+</body>
+</html>
