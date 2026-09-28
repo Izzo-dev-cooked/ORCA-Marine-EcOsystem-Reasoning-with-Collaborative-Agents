@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ORCA is an agentic marine intelligence assistant that finds live sea conditions, fishing zones, and place information anywhere on Earth, with regional-language translation.">
+    <title>ORCA - Marine & Location Intelligence Assistant</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- ==================== HEADER ==================== -->
+        <header class="app-header">
+            <div class="header-wrapper">
+                <div class="logo-section">
+                    <h1><i class="fas fa-water"></i> ORCA</h1>
+                    <p>Marine Ecosystem Reasoning with Collaborative Agents</p>
+                </div>
+                
+                <div class="search-section">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="locationSearch" placeholder="Search any place or coast... (e.g., Goa, Mumbai, Chennai)" autocomplete="off">
+                        <button id="searchBtn" class="search-btn"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="top-tab-bar" aria-label="Primary navigation" role="tablist">
+            <button class="top-tab active" type="button" role="tab" aria-selected="true" aria-controls="tab-home" data-tab="home">
+                <i class="fas fa-house"></i> Home
+            </button>
+            <button class="top-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-fishing" data-tab="fishing">
+                <i class="fas fa-fish"></i> Fishing Zones
+            </button>
+            <button class="top-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-details" data-tab="details">
+                <i class="fas fa-circle-info"></i> Place Details
+            </button>
+        </nav>
+
+        <!-- Shown when the Flask backend (ui.py) isn't reachable - AI mission requests need it -->
+        <div id="backendWarningBanner" class="backend-warning-banner hidden">
+            <i class="fas fa-triangle-exclamation"></i>
+            <span>Flask backend not detected. Run <code>python ui.py</code> and open this page at <code>http://localhost:5000</code> to enable offshore mission requests. Search, chat, and location lookup still work without it.</span>
+            <button id="backendWarningClose" class="backend-warning-close" type="button" title="Dismiss"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- ==================== TAB CONTENT ==================== -->
+        <main class="content-wrapper">
+            <!-- Persistent map: kept mounted while the right-side tab content changes. -->
+            <div class="persistent-map-column">
+                <div class="panel panel-left">
+                    <div class="panel-header">
+                    <h2><i class="fas fa-map"></i> Location Map</h2>
+                    <p class="subtitle">Select a marker to ask ORCA about that location</p>
+                    </div>
+                    <div class="map-wrapper">
+                        <div id="map" class="map-container"></div>
+                        <div id="weatherStatsBox" class="weather-stats-box hidden"></div>
+                    </div>
+                    <div class="map-legend">
+                        <span class="legend-item"><span class="legend-dot dot-safe"></span> Safe</span>
+                        <span class="legend-item"><span class="legend-dot dot-caution"></span> Caution</span>
+                        <span class="legend-item"><span class="legend-dot dot-danger"></span> Danger</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <section id="tab-home" class="tab-panel active" role="tabpanel">
+                    <div class="panel panel-right">
+                <div class="panel-header">
+                    <div class="panel-header-row">
+                        <h2><i class="fas fa-robot"></i> AI Assistant</h2>
+                        <label class="language-select-wrap">
+                            <i class="fas fa-language"></i>
+                            <select id="languageSelect" title="Reply language"></select>
+                        </label>
+                    </div>
+                    <p class="subtitle">Ask me anything about places — replies can be translated to your regional language</p>
+                </div>
+
+                <div id="chatMessages" class="chat-messages">
+                    <div class="message assistant-message">
+                        <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                        <div class="message-content">
+                            <p>👋 Hello! I'm ORCA, your AI Marine & Location Assistant. Ask me about any place on Earth!</p>
+                            <p>Ask me about:</p>
+                            <ul>
+                                <li>🌊 Sea state, waves & safety alerts</li>
+                                <li>🏙️ Cities and regions</li>
+                                <li>⛈️ Weather & climate</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <button id="micButton" class="chat-tool-button" type="button" title="Speak your query" aria-label="Speak your query">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <input type="text" id="chatInput" placeholder="Ask me about places..." autocomplete="off">
+                    <button id="chatSendBtn" onclick="sendChatMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+                </section>
+
+            <section id="tab-fishing" class="tab-panel" role="tabpanel" hidden>
+                <div class="panel panel-fishing standalone-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-fish"></i> Fishing Zones</h2>
+                        <p class="subtitle" id="fishingSubtitle">Loading live conditions...</p>
+                    </div>
+                    <div id="fishingZonesList" class="fishing-zones-list">
+                        <div class="empty-state">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Fetching fishing zone conditions...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-details" class="tab-panel" role="tabpanel" hidden>
+                <div class="panel panel-center standalone-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-info-circle"></i> Place Details</h2>
+                        <p class="subtitle" id="detailsSubtitle">Select a location to view information</p>
+                    </div>
+                    <div id="locationDetails" class="details-container">
+                        <div class="empty-state">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Search or click on a location to see details</p>
+                            <p class="hint">Try searching for: Mumbai, Delhi, Bangalore, Goa, Kolkata, or Jaipur</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>ORCA — Marine Ecosystem Reasoning with Collaborative Agents. Live data from Open-Meteo & Wikipedia. Map tiles by OpenStreetMap.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../static/script.js"></script>
+</body>
+</html>
