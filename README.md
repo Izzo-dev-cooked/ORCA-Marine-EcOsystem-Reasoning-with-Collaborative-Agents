@@ -14,6 +14,22 @@ A Flask-based web application for marine intelligence and decision support.
 └── output/              # Build/output directory
 ```
 
+## 👥 Contributors
+
+A huge thank you to the amazing people who helped bring this project to life:
+
+* **[Harshul Mehta](https://github.com/Qubit-007)** -  AI Architect & Core Developer
+  * Designed and built the autonomous AI agentic workflows.
+  * Developed the core backend logic, LLM prompt engineering, and tool execution.
+* **[Hououin Kyouma](https://github.com "johnsmith profile")** - Full-Stack Engineer
+  * Built the Flask web framework, server routing, and API endpoints.
+  * Designed and developed the frontend user interface. 
+* **[Krish](https://github.com/krish1086)** - Researcher
+* **[Krishna](https://github.com/02krishnathemonarch)** - Researcher
+* **[Khusbu](https://github.com "alexqi profile")** - Tester
+* **[Khushi](https://github.com "alexqi profile")** - Tester
+
+
 ## Installation & Setup
 
 ### 1. Install Flask
