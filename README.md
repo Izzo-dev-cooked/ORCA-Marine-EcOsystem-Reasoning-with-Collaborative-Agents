@@ -2,6 +2,8 @@
 
 A Flask-based web application for marine intelligence and decision support.
 
+**Live UI:** [Open ORCA on GitHub Pages](https://izzo-dev-cooked.github.io/ORCA-Marine-EcOsystem-Reasoning-with-Collaborative-Agents/)
+
 ## Project Structure
 
 ```
