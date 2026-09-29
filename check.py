@@ -1,5 +1,4 @@
-if ($env:FAST2SMS_API_KEY) {
-    "API key loaded"
-} else {
-    "API key missing"
-}
+import os
+
+
+print("API key loaded" if os.environ.get("FAST2SMS_API_KEY") else "API key missing")
